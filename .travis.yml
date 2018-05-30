@@ -1,7 +1,27 @@
-language: generic
+sudo: required
 services:
-  - docker
-install:
-  - docker build .
-after_script:
-  - "curl -X POST https://hooks.microbadger.com/images/qmcgaw/private-internet-access/tQFy7AxtSUNANPe6aoVChYdsI_I="
+- docker
+language: bash
+script:
+# prepare qemu
+- docker run --rm --privileged multiarch/qemu-user-static:register --reset
+# build image
+- docker build -t tommye123/private-internet-access-docker -f dockerfile-armhf .
+
+# push image
+- >
+  if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+    docker login -u="$DOCKER_USER" -p="$DOCKER_PASS"
+    docker tag tommye123/private-internet-access-docker tommye123/private-internet-access-docker:armhf-latest
+    docker push tommye123/private-internet-access-docker:armhf-latest
+    docker push tommye123/private-internet-access-docker
+  fi
+
+# Previous code
+# language: generic
+# services:
+#   - docker
+# install:
+#   - docker build .
+# after_script:
+#   - "curl -X POST https://hooks.microbadger.com/images/qmcgaw/private-internet-access/tQFy7AxtSUNANPe6aoVChYdsI_I="
