@@ -22,6 +22,10 @@ script:
           # docker tag $REPO $REPO:armhf-latest
           docker push $REPO:armhf-latest
           # docker push $REPO
+      else
+          # Push not required
+          echo "Branch: $TRAVIS_BRANCH"
+          echo "Request Type: $TRAVIS_PULL_REQUEST"
       fi
 
 # Previous code
