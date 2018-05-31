@@ -13,15 +13,15 @@ script:
     # Build image
     - docker build -t $REPO:armhf-latest -f dockerfile-armhf .
 
-after_success:
-    # Check the branch is Master and its also not a PR causing a build
-    - if [[ $TRAVIS_BRANCH = "master" ]] && [[ $TRAVIS_PULL_REQUEST = "false" ]] ; then
-      # Login and push image to Docker
-      docker login -u "$DOCKER_USER" -p "$DOCKER_PASS"
-      # docker tag $REPO $REPO:armhf-latest
-      docker push $REPO:armhf-latest
-      # docker push $REPO
-      fi
+# after_success:
+#     # Check the branch is Master and its also not a PR causing a build
+#     - if [[ $TRAVIS_BRANCH = "master" ]] && [[ $TRAVIS_PULL_REQUEST = "false" ]] ; then
+#       # Login and push image to Docker
+#       docker login -u "$DOCKER_USER" -p "$DOCKER_PASS"
+#       # docker tag $REPO $REPO:armhf-latest
+#       docker push $REPO:armhf-latest
+#       # docker push $REPO
+#       fi
 
 # Previous code
 # language: generic
