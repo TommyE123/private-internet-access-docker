@@ -1,21 +1,28 @@
 sudo: required
-services:
-- docker
-language: bash
-script:
-# prepare qemu
-- docker run --rm --privileged multiarch/qemu-user-static:register --reset
-# build image
-- docker build -t tommye123/private-internet-access-docker -f dockerfile-armhf .
 
-# push image
-- >
-  if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
-    docker login -u="$DOCKER_USER" -p="$DOCKER_PASS"
-    docker tag tommye123/private-internet-access-docker tommye123/private-internet-access-docker:armhf-latest
-    docker push tommye123/private-internet-access-docker:armhf-latest
-    docker push tommye123/private-internet-access-docker
-  fi
+services:
+    - docker
+    
+language: bash
+
+script:
+    # Set repo to push to
+    - export REPO=tommye123/private-internet-access-docker
+    # Prepare qemu
+    - docker run --rm --privileged multiarch/qemu-user-static:register --reset
+    # Build image
+    - docker build -t $REPO -f dockerfile-armhf .
+
+after_success:
+    - >
+        # Check the branch is Master and its also not a PR causing a build
+        if [[ $TRAVIS_BRANCH = "master" ]] && [[ $TRAVIS_PULL_REQUEST = "false" ]]; then
+            # Login and push image to Docker
+            docker login -u "$DOCKER_USER" -p "$DOCKER_PASS"
+            docker tag $REPO $REPO:armhf-latest
+            docker push $REPO:armhf-latest
+            docker push $REPO
+        fi
 
 # Previous code
 # language: generic
