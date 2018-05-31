@@ -5,7 +5,7 @@ services:
     
 language: bash
 
-install:
+script:
     # Set repo to push to
     - export REPO=tommye123/private-internet-access-docker
     # Prepare qemu
