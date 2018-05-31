@@ -1,5 +1,5 @@
-FROM resin/armhf-alpine:latest
-LABEL maintainer="quentin.mcgaw@gmail.com" \
+FROM resin/armhf-alpine:edge
+LABEL maintainer="TBC" \
       description="VPN client to private internet access servers using OpenVPN, Alpine and Cloudflare 1.1.1.1 DNS over TLS" \
       download="5.6MB" \
       size="13.5MB" \
