@@ -5,7 +5,7 @@ services:
     
 language: bash
 
-script:
+install:
     # Set repo to push to
     - export REPO=tommye123/private-internet-access-docker
     # Prepare qemu
@@ -16,14 +16,15 @@ script:
 after_success:
     # Check the branch is Master and its also not a PR causing a build
     - |
-      if [[ $TRAVIS_BRANCH = "master" ]] && [[ $TRAVIS_PULL_REQUEST = "false" ]] ; then
-        # Login and push image to Docker
-        echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        docker push $REPO:armhf-latest
+      if [[ $TRAVIS_PULL_REQUEST = 'false' ]] && [[ $TRAVIS_BRANCH = 'master' ]] ; then
+         # Login and push image to Docker
+         echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+         docker push $REPO:armhf-latest
+         curl -X POST https://hooks.microbadger.com/images/$REPO/frznrd3bUG6fCthF4cPIyC0vjW4=
       else
-        # Push not required
-        echo "Branch: $TRAVIS_BRANCH"
-        echo "Request Type: $TRAVIS_PULL_REQUEST"
+         # Push not required
+         echo "Branch: $TRAVIS_BRANCH"
+         echo "Request Type: $TRAVIS_PULL_REQUEST"
       fi
 
 # Previous code
