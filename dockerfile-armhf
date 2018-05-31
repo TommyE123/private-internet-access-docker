@@ -1,4 +1,4 @@
-FROM resin/raspberrypi3-alpine:latest
+FROM resin/armhf-alpine:latest
 LABEL maintainer="TBC" \
       description="VPN client to private internet access servers using OpenVPN, Alpine and Cloudflare 1.1.1.1 DNS over TLS" \
       download="5.6MB" \
@@ -6,7 +6,7 @@ LABEL maintainer="TBC" \
       ram="12MB" \
       cpu_usage="Low" \
       github="https://github.com/tommye123/private-internet-access-docker"
-RUN apk add -q --progress --no-cache --update openvpn unbound ca-certificates wget curl && \
+RUN apk add -q --progress --no-cache --update openvpn unbound ca-certificates wget && \
     apk add -q --progress --no-cache --update --virtual=build-dependencies unzip && \
     mkdir /openvpn-udp-normal /openvpn-udp-strong /openvpn-tcp-normal /openvpn-tcp-strong && \
     wget -q https://www.privateinternetaccess.com/openvpn/openvpn.zip \
