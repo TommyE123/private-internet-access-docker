@@ -1,4 +1,4 @@
-FROM resin/raspberrypi3-alpine:edge
+FROM resin/armhf-alpine:latest
 LABEL maintainer="TBC" \
       description="VPN client to private internet access servers using OpenVPN, Alpine and Cloudflare 1.1.1.1 DNS over TLS" \
       download="5.6MB" \
